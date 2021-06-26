@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Produktif.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,24 +11,27 @@ namespace Produktif
 {
     public partial class TaskListUc : UserControl
     {
-       private Task _task { get; set; }
-        public TaskManager _taskManager  { get;set;}
-        public string Id { get { return _task.Id; } }
+        private UserActivity _task { get; set; }
+        public TaskManager _taskManager { get; set; }
+        public long Id { get { return _task.Id; } }
+
+        public event EventHandler<TaskListEventArgs> OnAction;
 
         public TaskListUc()
-            :this (null, null)
+            : this(null, null)
         {
             InitializeComponent();
         }
 
-        public TaskListUc(TaskManager tm, Task task)
+        public TaskListUc(TaskManager tm, UserActivity task)
         {
             InitializeComponent();
 
             _task = task;
-            _task.PropertyChanged += _task_PropertyChanged;
+            //_task.PropertyChanged += _task_PropertyChanged;
             _taskManager = tm;
         }
+
 
         private void _task_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -36,25 +40,37 @@ namespace Produktif
 
         public void RefreshInfo()
         {
-            lblDesription.Text = _task.Description;
+            lblDesription.Text = _task.Name;
             lblSpend.Text = UtilString.ToReadableString(_task.TotalSpend);
-            lblStatus.Text = _task.CurrentStatus.ToString();
+            //lblStatus.Text = _task.Status;
 
             string nextAction = "";
-            switch (_task.CurrentStatus)
+            if (_task.LatestStatus == ActivityStatusType.InProgress)
             {
-                case Status.InProgress:
-                    this.BackColor = Color.DarkGreen;
-                    this.ForeColor = Color.White;
-                    nextAction = "Stop";
-                    break;
-                default:
-                case Status.Cancelled:
-                    this.BackColor = SystemColors.Control;
-                    this.ForeColor = Color.Black;
-                    nextAction = "Start";
-                    break;
+                this.BackColor = Color.DarkGreen;
+                this.ForeColor = Color.White;
+                nextAction = "Pause";
             }
+            else
+            {
+                this.BackColor = SystemColors.Control;
+                this.ForeColor = Color.Black;
+                nextAction = "Start";
+            }
+            //switch (_task.Status)
+            //{
+            //    case Status.InProgress:
+            //        this.BackColor = Color.DarkGreen;
+            //        this.ForeColor = Color.White;
+            //        nextAction = "Stop";
+            //        break;
+            //    default:
+            //    case Status.Cancelled:
+            //        this.BackColor = SystemColors.Control;
+            //        this.ForeColor = Color.Black;
+            //        nextAction = "Start";
+            //        break;
+            //}
 
 
             btnAction.Text = nextAction;
@@ -65,14 +81,25 @@ namespace Produktif
         {
             if (btnAction.Text.ToLower() == "start")
             {
-                _taskManager.UpdateTaskStatus(_task, Status.InProgress);
+                if (OnAction != null)
+                    OnAction(this, new TaskListEventArgs(_task, ActivityStatusType.InProgress));
+                //_taskManager.UpdateTaskStatus(_task, Status.InProgress);
                 //Task.UpdateStatus(Status.InProgress);
             }
             else
             {
-                _taskManager.UpdateTaskStatus(_task, Status.Pause);
+                if (OnAction != null)
+                    OnAction(this, new TaskListEventArgs(_task, ActivityStatusType.Pause));
+                //_taskManager.UpdateTaskStatus(_task, Status.Pause);
                 //Task.UpdateStatus(Status.Pause);
             }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            if (OnAction != null)
+                OnAction(this, new TaskListEventArgs(_task, ActivityStatusType.Stop));
+
         }
 
         //private void btnAction_Click(object sender, EventArgs e)
@@ -91,4 +118,16 @@ namespace Produktif
         //    RefreshInfo();
         //}
     }
+
+    public class TaskListEventArgs : EventArgs
+    {
+        public UserActivity UserActivity { get; set; }
+        public ActivityStatusType Action { get; set; }
+
+        public TaskListEventArgs(UserActivity task, ActivityStatusType action)
+        {
+            UserActivity = task;
+            Action = action;
+        }
     }
+}

@@ -21,5 +21,9 @@ namespace Produktif
             return formatted;
         }
 
+        internal static string ToReadableString(object totalSpend)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

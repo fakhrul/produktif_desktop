@@ -55,17 +55,17 @@ namespace Produktif
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var status = (Status)comboBox1.SelectedItem;
-                TaskManager.UpdateTaskStatus(Task, status);
-                //Task.UpdateStatus(status);
-                DialogResult = DialogResult.OK;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    var status = (Status)comboBox1.SelectedItem;
+            //    TaskManager.UpdateTaskStatus(Task, status);
+            //    //Task.UpdateStatus(status);
+            //    DialogResult = DialogResult.OK;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -80,17 +80,17 @@ namespace Produktif
 
         private void btnAction_Click(object sender, EventArgs e)
         {
-            if (btnAction.Text.ToLower() == "start")
-            {
-                TaskManager.UpdateTaskStatus(Task, Status.InProgress);
-                //Task.UpdateStatus(Status.InProgress);
-            }
-            else
-            {
-                TaskManager.UpdateTaskStatus(Task, Status.Pause);
-                //Task.UpdateStatus(Status.Pause);
-            }
-            DialogResult = DialogResult.OK;
+            //if (btnAction.Text.ToLower() == "start")
+            //{
+            //    TaskManager.UpdateTaskStatus(Task, Status.InProgress);
+            //    //Task.UpdateStatus(Status.InProgress);
+            //}
+            //else
+            //{
+            //    TaskManager.UpdateTaskStatus(Task, Status.Pause);
+            //    //Task.UpdateStatus(Status.Pause);
+            //}
+            //DialogResult = DialogResult.OK;
         }
     }
 }

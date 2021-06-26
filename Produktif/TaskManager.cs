@@ -45,16 +45,16 @@ namespace Produktif
             LastKeyboardPress = DateTime.Now;
         }
 
-        internal void UpdateLatestStatus(Status status)
-        {
-            foreach (var task in _taskList)
-            {
-                if (task.CurrentStatus == Status.InProgress)
-                    task.UpdateStatus(status);
-            }
+        //internal void UpdateLatestStatus(Status status)
+        //{
+        //    foreach (var task in _taskList)
+        //    {
+        //        if (task.CurrentStatus == Status.InProgress)
+        //            task.UpdateStatus(status);
+        //    }
 
-            SendTaskManagerInfoUpdate();
-        }
+        //    SendTaskManagerInfoUpdate();
+        //}
 
         internal bool IsStatusInProgress()
         {
@@ -81,18 +81,18 @@ namespace Produktif
         //    SendTaskManagerInfoUpdate();
         //}
 
-        internal void UpdateTaskStatus(Task taskToModify, Status status)
-        {
-            foreach (var task in TaskList)
-            {
-                if(task.CurrentStatus == Status.InProgress && !task.Equals(taskToModify))
-                {
-                    task.UpdateStatus(Status.Pause);
-                }
-            }
+        //internal void UpdateTaskStatus(Task taskToModify, Status status)
+        //{
+        //    foreach (var task in TaskList)
+        //    {
+        //        if(task.CurrentStatus == Status.InProgress && !task.Equals(taskToModify))
+        //        {
+        //            task.UpdateStatus(Status.Pause);
+        //        }
+        //    }
 
-            taskToModify.UpdateStatus(status);
-        }
+        //    taskToModify.UpdateStatus(status);
+        //}
 
         internal List<Task> GetTaskList()
         {

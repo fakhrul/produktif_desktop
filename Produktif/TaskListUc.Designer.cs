@@ -30,58 +30,61 @@ namespace Produktif
         private void InitializeComponent()
         {
             this.lblDesription = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.lblSpend = new System.Windows.Forms.Label();
             this.btnAction = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblDesription
             // 
             this.lblDesription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblDesription.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblDesription.Location = new System.Drawing.Point(3, 0);
+            this.lblDesription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblDesription.Location = new System.Drawing.Point(3, 3);
             this.lblDesription.Name = "lblDesription";
-            this.lblDesription.Size = new System.Drawing.Size(746, 86);
+            this.lblDesription.Size = new System.Drawing.Size(350, 62);
             this.lblDesription.TabIndex = 0;
             this.lblDesription.Text = "label1";
             // 
-            // lblStatus
-            // 
-            this.lblStatus.Location = new System.Drawing.Point(3, 89);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(320, 25);
-            this.lblStatus.TabIndex = 1;
-            this.lblStatus.Text = "label2";
-            // 
             // lblSpend
             // 
-            this.lblSpend.Location = new System.Drawing.Point(3, 123);
+            this.lblSpend.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSpend.Location = new System.Drawing.Point(3, 67);
             this.lblSpend.Name = "lblSpend";
-            this.lblSpend.Size = new System.Drawing.Size(320, 25);
+            this.lblSpend.Size = new System.Drawing.Size(320, 16);
             this.lblSpend.TabIndex = 2;
             this.lblSpend.Text = "label3";
             // 
             // btnAction
             // 
-            this.btnAction.Location = new System.Drawing.Point(600, 88);
+            this.btnAction.Location = new System.Drawing.Point(359, 3);
             this.btnAction.Name = "btnAction";
-            this.btnAction.Size = new System.Drawing.Size(149, 60);
+            this.btnAction.Size = new System.Drawing.Size(80, 80);
             this.btnAction.TabIndex = 3;
             this.btnAction.Text = "Start";
             this.btnAction.UseVisualStyleBackColor = true;
             this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(445, 3);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(80, 80);
+            this.btnStop.TabIndex = 4;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // TaskListUc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnAction);
             this.Controls.Add(this.lblSpend);
-            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblDesription);
             this.Name = "TaskListUc";
-            this.Size = new System.Drawing.Size(752, 156);
+            this.Size = new System.Drawing.Size(530, 88);
             this.ResumeLayout(false);
 
         }
@@ -89,8 +92,8 @@ namespace Produktif
         #endregion
 
         private System.Windows.Forms.Label lblDesription;
-        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblSpend;
         private System.Windows.Forms.Button btnAction;
+        private System.Windows.Forms.Button btnStop;
     }
 }
