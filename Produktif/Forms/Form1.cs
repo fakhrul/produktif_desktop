@@ -37,6 +37,7 @@ namespace Produktif
         public Form1()
         {
             InitializeComponent();
+            RepositionWindowsBottomRight();
 
             IDatabaseFactory database = new DatabaseFactory();
 
@@ -50,22 +51,68 @@ namespace Produktif
 
             _windowHelper = new WindowHelper();
             _windowHelper.OnActiveWindowUpdate += _windowHelper_OnActiveWindowUpdate;
-            //dele = new WinEventDelegate(WinEventProc);
-            //IntPtr m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
 
         }
 
         private void _refreshActiveAppDisplay_Tick(object sender, EventArgs e)
         {
-            IEnumerable<ActiveApp> activeApps;
-            lock (_dbLock)
-                activeApps = _activeAppRepository.Pass8hour();
+            try
+            {
+                IEnumerable<ActiveApp> activeApps;
+                lock (_dbLock)
+                    activeApps = _activeAppRepository.SinceInHour(8);
 
+                UpdateGuiActiveApps(activeApps);
+
+                UpdateGuiMostBrowseUrl(activeApps);
+
+
+                IEnumerable<UserActivity> userActivities;
+                lock (_dbLock)
+                    userActivities = _userActivityRepository.SinceInHour(24);
+
+                activeAppuc1.UpdateTaskProgress(userActivities);
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        private void UpdateGuiMostBrowseUrl(IEnumerable<ActiveApp> activeApps)
+        {
+            Dictionary<string, TimeSpan> mostBrowsingUrl = new Dictionary<string, TimeSpan>();
+
+            foreach (var activeApp in activeApps)
+            {
+                string unique = string.Format("{0}", activeApp.Url);
+                if (!string.IsNullOrEmpty(unique))
+                {
+                    if (!string.IsNullOrEmpty(Extensions.IsValidUrl(unique)))
+                    {
+                        if (mostBrowsingUrl.ContainsKey(unique))
+                        {
+                            mostBrowsingUrl[unique] += activeApp.TotalTimeSpend;
+                        }
+                        else
+                        {
+                            mostBrowsingUrl.Add(unique, activeApp.TotalTimeSpend);
+                        }
+                    }
+                }
+            }
+
+            activeAppuc1.UpdateMostBrowseUrl(mostBrowsingUrl);
+        }
+
+        private void UpdateGuiActiveApps(IEnumerable<ActiveApp> activeApps)
+        {
             Dictionary<string, TimeSpan> activeAppDict = new Dictionary<string, TimeSpan>();
 
             foreach (var activeApp in activeApps)
             {
-                string unique = string.Format("{0}|{1}", activeApp.Name, activeApp.Url);
+                string unique = string.Format("{0}", activeApp.Name);
                 if (activeAppDict.ContainsKey(unique))
                 {
                     activeAppDict[unique] += activeApp.TotalTimeSpend;
@@ -76,20 +123,7 @@ namespace Produktif
                 }
             }
 
-            activeAppuc1.UpdateInfo(activeAppDict);
-
-            //lvTaskList.Items.Clear();
-            //foreach (var activeApp in activeApps)
-            //{
-            //    lvTaskList.Items.Insert(0, new ListViewItem(new string[] {
-            //            activeApp.Name,
-            //    activeApp.StartDateTime.ToString("HH:mm:ss"),
-            //    activeApp.EndDateTime.ToString("HH:mm:ss"),
-            //    activeApp.Title,
-            //    activeApp.Url,
-            //    ""
-            //    }));
-            //}
+            activeAppuc1.UpdateMostUseApps(activeAppDict);
         }
 
         private void _windowHelper_OnActiveWindowUpdate(object sender, ActiveWindowUpdateEventArgs e)
@@ -142,30 +176,33 @@ namespace Produktif
             var keyboardPressTimeSpan = current - _taskManager.LastKeyboardPress;
             var mouseMoveTimeSpan = current - _taskManager.LastMouseMoved;
 
-            lblKeyPress.Text = UtilString.ToReadableString(keyboardPressTimeSpan);
-            lblMouseMove.Text = UtilString.ToReadableString(mouseMoveTimeSpan);
+            //lblKeyPress.Text = Extensions.ToReadableString(keyboardPressTimeSpan);
+            //lblMouseMove.Text = Extensions.ToReadableString(mouseMoveTimeSpan);
 
             if (mouseMoveTimeSpan.TotalSeconds > Setting.IDLE_TIME_IN_SECONDS &&
                 keyboardPressTimeSpan.TotalSeconds > Setting.IDLE_TIME_IN_SECONDS)
             {
                 switch (this.WindowState)
                 {
-                    case FormWindowState.Normal:
-                        break;
                     case FormWindowState.Minimized:
                         this.WindowState = FormWindowState.Normal;
-                        break;
-                    case FormWindowState.Maximized:
+                        RepositionWindowsBottomRight();
+
                         break;
                     default:
+                    case FormWindowState.Normal:
+                        //RepositionWindowsBottomRight();
+                        break;
+                    case FormWindowState.Maximized:
+
                         break;
                 }
-                if (chkAlwaysOnTop.Checked)
+                if (!this.Visible)
                 {
+
                     this.TopMost = true;
                     this.TopMost = false;
                 }
-
                 lock (_dbLock)
                 {
                     var inProgress = _userActivityRepository.FindAllInProgressStatus();
@@ -174,14 +211,12 @@ namespace Produktif
                         foreach (var ip in inProgress)
                         {
                             ip.UpdateStatus(ActivityStatusType.Pause);
-                            //ip.Status = "pause";
                             _userActivityRepository.Update(ip);
                         }
                         _unitOfWork.Commit();
                     }
                 }
 
-                //_taskManager.UpdateLatestStatus(Status.Pause);
                 RefreshUserActivityList();
             }
             else
@@ -197,16 +232,19 @@ namespace Produktif
                     switch (this.WindowState)
                     {
                         case FormWindowState.Normal:
+                            //RepositionWindowsBottomRight();
                             break;
                         case FormWindowState.Minimized:
                             this.WindowState = FormWindowState.Normal;
+                            RepositionWindowsBottomRight();
                             break;
                         case FormWindowState.Maximized:
                             break;
                         default:
                             break;
                     }
-                    if (chkAlwaysOnTop.Checked)
+
+                    if (!this.Visible)
                     {
                         this.TopMost = true;
                         this.TopMost = false;
@@ -290,7 +328,6 @@ namespace Produktif
                             }
                         }
 
-                        //obj.Status = e.Action;
                         obj.UpdateStatus(e.Action);
                         _userActivityRepository.Update(obj);
                         _unitOfWork.Commit();
@@ -368,16 +405,20 @@ namespace Produktif
 
         private void Form1_VisibleChanged(object sender, EventArgs e)
         {
-            //if (this.Visible)
-            //{
-            //    //flowLayoutPanel1.Controls.Clear();
-            //    //RefreshList();
-            //}
+            if (this.Visible)
+            {
+                // RepositionWindowsBottomRight();
+
+                //flowLayoutPanel1.Controls.Clear();
+                //RefreshList();
+            }
         }
 
         private void Form1_Activated(object sender, EventArgs e)
         {
             //flowLayoutPanel1.Controls.Clear();
+            RepositionWindowsBottomRight();
+
         }
 
         //private void btnRefreshApp_Click(object sender, EventArgs e)
@@ -411,10 +452,10 @@ namespace Produktif
 
         private void chkAlwaysOnTop_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkAlwaysOnTop.Checked)
-                TopMost = true;
-            else
-                TopMost = false;
+            //if (chkAlwaysOnTop.Checked)
+            //    TopMost = true;
+            //else
+            //    TopMost = false;
 
         }
 
@@ -446,6 +487,44 @@ namespace Produktif
                         //_activityTimerRepository.Add(timer);
                         //act.ActivityTimerList.Add(timer);
 
+                        _unitOfWork.Commit();
+                    }
+                }
+            }
+            RefreshUserActivityList();
+
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                RepositionWindowsBottomRight();
+            }
+        }
+
+        private void RepositionWindowsBottomRight()
+        {
+            Rectangle workingArea = Screen.GetWorkingArea(this);
+            if (this.Location.X != workingArea.Right - Size.Width)
+                this.Location = new Point(workingArea.Right - Size.Width,
+                                          workingArea.Bottom - Size.Height);
+        }
+
+        private void btnAddNewTask_Click(object sender, EventArgs e)
+        {
+            AddNewTaskForm tf = new AddNewTaskForm();
+            if (tf.ShowDialog() == DialogResult.OK)
+            {
+                if (!string.IsNullOrEmpty(tf.Description))
+                {
+                    lock (_dbLock)
+                    {
+                        var act = new Models.UserActivity();
+                        act.Name = tf.Description;
+                        act.Email = "fakhrulazran@gmail.com";
+                        act.UpdateStatus(ActivityStatusType.Pause);
+                        _userActivityRepository.Add(act);
                         _unitOfWork.Commit();
                     }
                 }

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Produktif.Models
 {
-    public class UserActivity
+    public class UserActivity: ICloneable
     {
         [Key]
         public long Id { get; set; }
@@ -20,6 +20,7 @@ namespace Produktif.Models
 
         public virtual ICollection<ActivityTimer> ActivityTimerList { get; set; }
 
+        public DateTime CreatedDateTime { get; set; }
 
         public ActivityStatusType LatestStatus { get; set; }
 
@@ -48,6 +49,8 @@ namespace Produktif.Models
         {
             //if(ActivityTimerList == null)
             ActivityTimerList = new ObservableCollection<ActivityTimer>();
+
+            CreatedDateTime = DateTime.Now;
 
         }
 
@@ -82,6 +85,20 @@ namespace Produktif.Models
                 LatestStatus = status;
             }
 
+        }
+
+        public object Clone()
+        {
+            var obj = new UserActivity();
+            obj.Id = Id;
+            obj.Email = Email;
+            obj.Name = Name;
+            obj.CreatedDateTime = CreatedDateTime;
+            obj.LatestStatus = LatestStatus;
+            obj.SynchStatus = SynchStatus;
+
+            obj.ActivityTimerList = Extensions.Clone<ActivityTimer>(ActivityTimerList.ToList());
+            return obj;
         }
     }
 

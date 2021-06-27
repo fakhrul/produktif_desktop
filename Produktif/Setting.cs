@@ -6,7 +6,7 @@ namespace Produktif
 {
     public class Setting
     {
-        public static  int IDLE_TIME_IN_SECONDS = 5;
+        public static  int IDLE_TIME_IN_SECONDS = 60*5;
 
     }
 }

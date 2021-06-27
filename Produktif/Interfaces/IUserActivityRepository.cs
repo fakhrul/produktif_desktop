@@ -12,5 +12,6 @@ namespace Produktif.Interfaces
         IEnumerable<UserActivity> FindAllActiveStatus();
         IEnumerable<UserActivity> FindAllInProgressStatus();
         bool IsInProgress();
+        IEnumerable<UserActivity> SinceInHour(int hour);
     }
 }

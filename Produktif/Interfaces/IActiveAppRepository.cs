@@ -9,6 +9,6 @@ namespace Produktif.Interfaces
     {
         //Add custom methods here if needed
         ActiveApp ByLatestDateTime();
-        IEnumerable<ActiveApp> Pass8hour();
+        IEnumerable<ActiveApp> SinceInHour(int hour);
     }
 }

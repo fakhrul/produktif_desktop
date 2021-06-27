@@ -33,11 +33,15 @@ namespace Produktif
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -60,7 +64,7 @@ namespace Produktif
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(434, 245);
+            this.listView1.Size = new System.Drawing.Size(434, 276);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -75,6 +79,11 @@ namespace Produktif
             this.columnHeader2.Text = "Url";
             this.columnHeader2.Width = 200;
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Duration";
+            this.columnHeader3.Width = 200;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
@@ -86,17 +95,28 @@ namespace Produktif
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.listView1);
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.splitContainer1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 26);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(434, 245);
+            this.panel2.Size = new System.Drawing.Size(434, 554);
             this.panel2.TabIndex = 3;
             // 
-            // columnHeader3
+            // splitContainer1
             // 
-            this.columnHeader3.Text = "Duration";
-            this.columnHeader3.Width = 200;
+            this.splitContainer1.Cursor = System.Windows.Forms.Cursors.VSplit;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listView1);
+            this.splitContainer1.Size = new System.Drawing.Size(434, 554);
+            this.splitContainer1.SplitterDistance = 274;
+            this.splitContainer1.TabIndex = 2;
             // 
             // ActiveAppUC
             // 
@@ -106,10 +126,13 @@ namespace Produktif
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ActiveAppUC";
-            this.Size = new System.Drawing.Size(434, 271);
+            this.Size = new System.Drawing.Size(434, 580);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -123,5 +146,6 @@ namespace Produktif
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

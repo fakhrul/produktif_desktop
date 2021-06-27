@@ -34,6 +34,11 @@ namespace Produktif
                 return true;
             return false;
         }
+
+        public IEnumerable<UserActivity> SinceInHour(int hour)
+        {
+            return base.Database.UserActivity.Where(c => c.CreatedDateTime > DateTime.Now.AddHours(hour * -1));
+        }
     }
 
 }

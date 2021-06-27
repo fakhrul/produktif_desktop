@@ -18,9 +18,9 @@ namespace Produktif.Repository
             return base.Database.ActiveApp.OrderByDescending(t => t.StartDateTime).FirstOrDefault();
         }
 
-        public IEnumerable<ActiveApp> Pass8hour()
+        public IEnumerable<ActiveApp> SinceInHour(int hour)
         {
-            return base.Database.ActiveApp.Where(c => c.StartDateTime > DateTime.Now.AddHours(-24));
+            return base.Database.ActiveApp.Where(c => c.StartDateTime > DateTime.Now.AddHours(hour*-1));
         }
     }
 }

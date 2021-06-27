@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Produktif.Models
 {
-    public class ActivityTimer
+    public class ActivityTimer : ICloneable
     {
         [Key]
         public long Id { get; set; }
@@ -25,6 +25,20 @@ namespace Produktif.Models
 
         }
 
+        public object Clone()
+        {
+            var obj = new ActivityTimer
+            {
+                Id = Id,
+                UserActivity = UserActivity,
+                UserActivityId = UserActivityId,
+                ActivityStatusType = ActivityStatusType,
+                StartDateTime = StartDateTime,
+                EndDateTime = EndDateTime,
+                SynchStatus = SynchStatus
+            };
+            return obj;
+        }
     }
 
     public enum ActivityStatusType

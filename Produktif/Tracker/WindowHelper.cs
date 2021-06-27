@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Automation;
 
@@ -161,19 +162,21 @@ namespace Produktif
         {
             try
             {
-                if(!urlString.StartsWith("https://") && !urlString.StartsWith("http://"))
-                {
-                    urlString = "http://" + urlString;
-                }
-                var uri = new Uri(urlString);
-                var host = uri.Host;
-                return host;// host.Substring(host.LastIndexOf('.', host.LastIndexOf('.') - 1) + 1);
+                string newUrl = Extensions.IsValidUrl(urlString);
+                if (string.IsNullOrEmpty(newUrl))
+                    return "";
+
+                var uri = new Uri(newUrl);
+                return uri.Host;
+                //var host = uri.Host;
+                //return host;// host.Substring(host.LastIndexOf('.', host.LastIndexOf('.') - 1) + 1);
             }
             catch (Exception ex)
             {
             }
             return "";
         }
+
 
         public bool GetBrowsedUrl(Process process, out string url, out string data)
         {

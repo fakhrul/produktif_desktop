@@ -18,6 +18,7 @@ namespace Produktif
             if (_database == null)
             {
                 _database = new Database();
+                //_database.Database.EnsureDeleted();
                 _database.Database.EnsureCreated();
             }
 
