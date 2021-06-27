@@ -13,6 +13,6 @@ The objective is to keep track, and you can use the information record for your 
 - You need to tell what you are doing. Even though you are doing nothing.
 
 ## Inital Screenshot
-![Produktif 1](./produktif_ss1.png)
-![Produktif 2](./produktif_ss2.png)
-![Produktif 3](./produktif_ss1.png)
+<img src="./produktif_ss1.png" width="300">
+<img src="./produktif_ss2.png" width="300">
+<img src="./produktif_ss3.png" width="300">
