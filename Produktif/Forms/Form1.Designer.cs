@@ -31,14 +31,14 @@ namespace Produktif
         {
             this.btnSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnAddNewTask = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.btnRefreshApp = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.activeAppuc1 = new Produktif.ActiveAppUC();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.activeAppuc1 = new Produktif.ActiveAppUC();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -69,14 +69,6 @@ namespace Produktif
             this.panel2.Size = new System.Drawing.Size(609, 67);
             this.panel2.TabIndex = 9;
             // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(465, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(144, 67);
-            this.panel1.TabIndex = 11;
-            // 
             // btnAddNewTask
             // 
             this.btnAddNewTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -91,6 +83,14 @@ namespace Produktif
             this.btnAddNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddNewTask.UseVisualStyleBackColor = true;
             this.btnAddNewTask.Click += new System.EventHandler(this.btnAddNewTask_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(465, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(144, 67);
+            this.panel1.TabIndex = 11;
             // 
             // btnRefreshApp
             // 
@@ -159,6 +159,7 @@ namespace Produktif
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.Deactivate += new System.EventHandler(this.Form1_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.VisibleChanged += new System.EventHandler(this.Form1_VisibleChanged);
@@ -181,9 +182,9 @@ namespace Produktif
         private System.Windows.Forms.Button btnRefreshApp;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ActiveAppUC activeAppuc1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnAddNewTask;
+        private ActiveAppUC activeAppuc1;
     }
 }
 

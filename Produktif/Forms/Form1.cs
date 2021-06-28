@@ -33,7 +33,7 @@ namespace Produktif
         private WindowHelper _windowHelper;
         //WinEventDelegate dele = null;
         private object _dbLock = new object();
-
+        AddNewTaskForm _addNewTaskForm;
         public Form1()
         {
             InitializeComponent();
@@ -197,7 +197,7 @@ namespace Produktif
 
                         break;
                 }
-                if (!this.Visible)
+                if (_addNewTaskForm == null)
                 {
 
                     this.TopMost = true;
@@ -244,7 +244,7 @@ namespace Produktif
                             break;
                     }
 
-                    if (!this.Visible)
+                    if (_addNewTaskForm == null)
                     {
                         this.TopMost = true;
                         this.TopMost = false;
@@ -414,10 +414,12 @@ namespace Produktif
             }
         }
 
+        bool _isActivate;
         private void Form1_Activated(object sender, EventArgs e)
         {
+            _isActivate = true;
             //flowLayoutPanel1.Controls.Clear();
-            RepositionWindowsBottomRight();
+            //RepositionWindowsBottomRight();
 
         }
 
@@ -464,36 +466,6 @@ namespace Produktif
 
         }
 
-        private void addNewTaskToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddNewTaskForm tf = new AddNewTaskForm();
-            if (tf.ShowDialog() == DialogResult.OK)
-            {
-                if (!string.IsNullOrEmpty(tf.Description))
-                {
-                    lock (_dbLock)
-                    {
-                        var act = new Models.UserActivity();
-                        act.Name = tf.Description;
-                        act.Email = "fakhrulazran@gmail.com";
-                        act.UpdateStatus(ActivityStatusType.Pause);
-                        _userActivityRepository.Add(act);
-
-                        //var timer = new Models.ActivityTimer();
-                        //timer.UserActivity = act;
-                        //timer.StartDateTime = DateTime.Now;
-                        //timer.UserActivityId = act.Id;
-                        //timer.UserActivity = act;
-                        //_activityTimerRepository.Add(timer);
-                        //act.ActivityTimerList.Add(timer);
-
-                        _unitOfWork.Commit();
-                    }
-                }
-            }
-            RefreshUserActivityList();
-
-        }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -513,15 +485,15 @@ namespace Produktif
 
         private void btnAddNewTask_Click(object sender, EventArgs e)
         {
-            AddNewTaskForm tf = new AddNewTaskForm();
-            if (tf.ShowDialog() == DialogResult.OK)
+            _addNewTaskForm = new AddNewTaskForm();
+            if (_addNewTaskForm.ShowDialog() == DialogResult.OK)
             {
-                if (!string.IsNullOrEmpty(tf.Description))
+                if (!string.IsNullOrEmpty(_addNewTaskForm.Description))
                 {
                     lock (_dbLock)
                     {
                         var act = new Models.UserActivity();
-                        act.Name = tf.Description;
+                        act.Name = _addNewTaskForm.Description;
                         act.Email = "fakhrulazran@gmail.com";
                         act.UpdateStatus(ActivityStatusType.Pause);
                         _userActivityRepository.Add(act);
@@ -531,6 +503,12 @@ namespace Produktif
             }
             RefreshUserActivityList();
 
+            _addNewTaskForm = null;
+        }
+
+        private void Form1_Deactivate(object sender, EventArgs e)
+        {
+            _isActivate = false;
         }
     }
 

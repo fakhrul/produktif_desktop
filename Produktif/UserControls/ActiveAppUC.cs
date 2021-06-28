@@ -83,7 +83,7 @@ namespace Produktif
                 cartesianChartTaskProgress.LegendLocation = LegendLocation.Right;
 
                 cartesianChartTaskProgress.Series = new SeriesCollection();
-                foreach (var item in userActivities.OrderBy(c => c.TotalSpend))
+                foreach (var item in userActivities.OrderByDescending(c => c.TotalSpend))
                 {
 
                     cartesianChartTaskProgress.Series.Add(new RowSeries
@@ -153,17 +153,21 @@ namespace Produktif
 
                 pieChart1.Series = new SeriesCollection();
 
-                foreach (var keys in mostBrowsingUrl.Keys)
-                {
+                //var top2 = (Dictionary<string, TimeSpan>)mostBrowsingUrl.OrderByDescending(c => c.Value).Take(2);
 
-                    pieChart1.Series.Add(new PieSeries
-                    {
-                        Title = keys,
-                        Values = new ChartValues<double> { mostBrowsingUrl[keys].TotalSeconds },
-                        //PushOut = mostBrowsingUrl[keys].TotalSeconds,
-                        DataLabels = true,
-                        LabelPoint = labelPoint
-                    });
+                foreach (var item in mostBrowsingUrl.OrderByDescending(c => c.Value).Take(10))
+                {
+                    //if (keys.Key > 5)
+                    //{
+                        pieChart1.Series.Add(new PieSeries
+                        {
+                            Title = item.Key,
+                            Values = new ChartValues<double> { item.Value.TotalSeconds },
+                            //PushOut = mostBrowsingUrl[keys].TotalSeconds,
+                            DataLabels = true,
+                            LabelPoint = labelPoint
+                        });
+                    //}
 
                 }
 
