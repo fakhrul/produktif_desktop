@@ -1,22 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Produktif.Interfaces;
+﻿using Produktif.Interfaces;
 using Produktif.Models;
 using Produktif.Repository;
-using Sentry;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace Produktif
 {
