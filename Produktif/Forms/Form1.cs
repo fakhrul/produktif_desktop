@@ -2,6 +2,7 @@
 using Produktif.Interfaces;
 using Produktif.Models;
 using Produktif.Repository;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -272,7 +273,7 @@ namespace Produktif
             lock (_dbLock)
                 userActivityList = _userActivityRepository.FindAllActiveStatus();
 
-            foreach (var task in userActivityList)
+            foreach (var task in userActivityList.OrderByDescending(c => c.LatestStartDateTime))
             {
                 bool isFound = false;
                 foreach (var control in flowLayoutPanel1.Controls)
@@ -509,6 +510,12 @@ namespace Produktif
         private void Form1_Deactivate(object sender, EventArgs e)
         {
             _isActivate = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           // throw new Exception("asdasd");
+            //SentrySdk.CaptureMessage(new ArgumentNullException("test", new Exception("inner")).Message);
         }
     }
 

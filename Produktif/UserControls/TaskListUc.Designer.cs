@@ -48,7 +48,7 @@ namespace Produktif
             this.lblDesription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblDesription.Location = new System.Drawing.Point(0, 0);
             this.lblDesription.Name = "lblDesription";
-            this.lblDesription.Size = new System.Drawing.Size(397, 65);
+            this.lblDesription.Size = new System.Drawing.Size(397, 31);
             this.lblDesription.TabIndex = 0;
             this.lblDesription.Text = "label1";
             // 
@@ -66,11 +66,12 @@ namespace Produktif
             // 
             this.btnAction.BackgroundImage = global::Produktif.Properties.Resources.pause;
             this.btnAction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAction.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnAction.FlatAppearance.BorderSize = 0;
             this.btnAction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAction.Location = new System.Drawing.Point(3, 3);
+            this.btnAction.Location = new System.Drawing.Point(100, 0);
             this.btnAction.Name = "btnAction";
-            this.btnAction.Size = new System.Drawing.Size(62, 62);
+            this.btnAction.Size = new System.Drawing.Size(35, 60);
             this.btnAction.TabIndex = 3;
             this.btnAction.UseVisualStyleBackColor = true;
             this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
@@ -79,11 +80,12 @@ namespace Produktif
             // 
             this.btnStop.BackgroundImage = global::Produktif.Properties.Resources.stop;
             this.btnStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnStop.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnStop.FlatAppearance.BorderSize = 0;
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStop.Location = new System.Drawing.Point(70, 3);
+            this.btnStop.Location = new System.Drawing.Point(65, 0);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(62, 62);
+            this.btnStop.Size = new System.Drawing.Size(35, 60);
             this.btnStop.TabIndex = 4;
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
@@ -93,9 +95,9 @@ namespace Produktif
             this.panel1.Controls.Add(this.lblSpend);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 65);
+            this.panel1.Location = new System.Drawing.Point(0, 31);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(532, 29);
+            this.panel1.Size = new System.Drawing.Size(397, 29);
             this.panel1.TabIndex = 5;
             // 
             // panel4
@@ -104,7 +106,7 @@ namespace Produktif
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 24);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(532, 5);
+            this.panel4.Size = new System.Drawing.Size(397, 5);
             this.panel4.TabIndex = 0;
             // 
             // panel2
@@ -114,16 +116,17 @@ namespace Produktif
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(397, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(135, 65);
+            this.panel2.Size = new System.Drawing.Size(135, 60);
             this.panel2.TabIndex = 6;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.lblDesription);
+            this.panel3.Controls.Add(this.panel1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(397, 65);
+            this.panel3.Size = new System.Drawing.Size(397, 60);
             this.panel3.TabIndex = 7;
             // 
             // TaskListUc
@@ -133,9 +136,8 @@ namespace Produktif
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Name = "TaskListUc";
-            this.Size = new System.Drawing.Size(532, 94);
+            this.Size = new System.Drawing.Size(532, 60);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);

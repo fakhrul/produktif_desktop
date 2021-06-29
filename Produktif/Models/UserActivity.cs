@@ -21,7 +21,14 @@ namespace Produktif.Models
         public virtual ICollection<ActivityTimer> ActivityTimerList { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
-
+        [NotMapped]
+        public DateTime LatestStartDateTime
+        {
+            get
+            {
+                return ActivityTimerList.OrderByDescending(c => c.StartDateTime).FirstOrDefault().StartDateTime;
+            }
+        }
         public ActivityStatusType LatestStatus { get; set; }
 
         public string SynchStatus { get; set; }

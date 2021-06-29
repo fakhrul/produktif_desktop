@@ -37,8 +37,9 @@ namespace Produktif
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.activeAppuc1 = new Produktif.ActiveAppUC();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -59,6 +60,7 @@ namespace Produktif
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnAddNewTask);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.btnRefreshApp);
@@ -146,6 +148,16 @@ namespace Produktif
             this.activeAppuc1.Size = new System.Drawing.Size(609, 339);
             this.activeAppuc1.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(279, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 29);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -185,6 +197,7 @@ namespace Produktif
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnAddNewTask;
         private ActiveAppUC activeAppuc1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
