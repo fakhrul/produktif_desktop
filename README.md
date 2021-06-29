@@ -1,4 +1,7 @@
 # Produktif Desktop Application
+## CI Status
+
+[![Build Status](https://dev.azure.com/fakhrulazran/Produktif/_apis/build/status/fakhrul.produktif_desktop?branchName=main)](https://dev.azure.com/fakhrulazran/Produktif/_build/latest?definitionId=1&branchName=main)
 
 ## Introduction
 This is a small scale time tracking application (like Rescue Time, etc.) use to record what are you doing on your desktop.
